@@ -29,28 +29,28 @@ module Songkickr
     def state_name
       return unless has_city?
 
-      state = city["state"]
+      state = raw_city["state"]
       !!state ? state["displayName"] : nil
     end
     
     def country_name
       return unless has_city?
 
-      country = city["country"]
+      country = raw_city["country"]
       !!country ? country["displayName"] : nil
     end
     
     def city_name
       return unless has_city?
 
-      city["displayName"]
+      raw_city["displayName"]
     end
 
     def has_city?
-      !!city
+      !!raw_city
     end
 
-    def city
+    def raw_city
       @venue_hash["city"]
     end
   end
