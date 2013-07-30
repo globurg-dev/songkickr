@@ -12,9 +12,9 @@ module Songkickr
 
       @street       = venue_hash["street"]
       @city         = venue_hash["city"]["displayName"]
-      @country      = venue_hash["city"]["country"]
-      @state        = venue_hash["city"]["state"]
-      @zip          = venue_hash["city"]["zip"]
+      @country      = venue_hash["city"]["country"]["displayName"]
+      @state        = venue_hash["city"]["state"]["displayName"]
+      @zip          = venue_hash["zip"]
 
       @website      = venue_hash["website"]
       @phone        = venue_hash["phone"]
