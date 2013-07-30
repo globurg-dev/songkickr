@@ -5,33 +5,53 @@ module Songkickr
       :website, :phone, :capacity, :description
 
     def initialize(venue_hash)
-      @display_name = venue_hash["displayName"]
-      @id           = venue_hash["id"]
-      @lat          = venue_hash["lat"]
-      @lng          = venue_hash["lng"]
+      @venue_hash = venue_hash
+      
+      @display_name = @venue_hash["displayName"]
+      @id           = @venue_hash["id"]
+      @lat          = @venue_hash["lat"]
+      @lng          = @venue_hash["lng"]
 
-      @street       = venue_hash["street"]
-      @city         = venue_hash["city"]["displayName"]
-      @country      = country_name(venue_hash)
-      @state        = state_name(venue_hash)
-      @zip          = venue_hash["zip"]
+      @street       = @venue_hash["street"]
+      @city         = city_name
+      @country      = country_name
+      @state        = state_name
+      @zip          = @venue_hash["zip"]
 
-      @website      = venue_hash["website"]
-      @phone        = venue_hash["phone"]
-      @capacity     = venue_hash["capacity"]
-      @description  = venue_hash["description"]
+      @website      = @venue_hash["website"]
+      @phone        = @venue_hash["phone"]
+      @capacity     = @venue_hash["capacity"]
+      @description  = @venue_hash["description"]
     end
     
     private
     
-    def state_name(venue_hash)
-      state = venue_hash["city"]["state"]
+    def state_name
+      return unless has_city?
+
+      state = city["state"]
       !!state ? state["displayName"] : nil
     end
     
-    def country_name(venue_hash)
-      country = venue_hash["city"]["country"]
+    def country_name
+      return unless has_city?
+
+      country = city["country"]
       !!country ? country["displayName"] : nil
+    end
+    
+    def city_name
+      return unless has_city?
+
+      city["displayName"]
+    end
+
+    def has_city?
+      !!city
+    end
+
+    def city
+      @venue_hash["city"]
     end
   end
 end
